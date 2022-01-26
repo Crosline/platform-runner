@@ -31,5 +31,6 @@ public class InputHandler : MonoBehaviour {
 
     public void SetIsActive(bool v) {
         isActive = v;
+        joystick.gameObject.SetActive(v);
     }
 }
