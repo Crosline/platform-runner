@@ -43,6 +43,11 @@ PrefabInstance:
       propertyPath: force
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 1745637334622863832, guid: 1e866c1a122c7d14b8bb343238842846,
+        type: 3}
+      propertyPath: m_Shape
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8162479402715459636, guid: 1e866c1a122c7d14b8bb343238842846,
         type: 3}
       propertyPath: m_Name

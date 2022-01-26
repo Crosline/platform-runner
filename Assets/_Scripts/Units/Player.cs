@@ -59,7 +59,7 @@ public class Player : Character {
 
     IEnumerator RestartCheckpoint() {
         _canMove = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.5f);
 
         _rb.velocity = Vector3.zero;
         transform.position = _startPos;

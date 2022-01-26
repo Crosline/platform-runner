@@ -31,14 +31,14 @@ public class Enemy : Character {
         _animator.SetFloat("Speed", _navMeshAgent.velocity.magnitude);
 
 
-        if (_navMeshAgent.remainingDistance < 0.3f) {
+        if (_navMeshAgent.remainingDistance < 1f) {
 
-            _counter++;
 
-            if (_counter == _path.Count + 1) {
+            if (_counter == _path.Count) {
                 _navMeshAgent.SetDestination(_destination);
-            } else if (_counter < _path.Count + 1) {
+            } else if (_counter < _path.Count) {
                 _navMeshAgent.SetDestination(_path[_counter]);
+                _counter++;
             } else {
                 _navMeshAgent.isStopped = true;
                 _navMeshAgent.velocity = Vector3.zero;
@@ -61,6 +61,7 @@ public class Enemy : Character {
         //_destination = destination;
         //_navMeshAgent.SetDestination(_destination);
         _navMeshAgent.SetDestination(_path[_counter]);
+        _counter++;
         _navMeshAgent.speed = _speed;
     }
 
@@ -79,15 +80,16 @@ public class Enemy : Character {
     IEnumerator RestartCheckpoint() {
         if (_canMove) {
             _canMove = false;
-            _navMeshAgent.isStopped = true;
-            yield return new WaitForSeconds(1f);
+
+            yield return new WaitForSeconds(.1f);
 
             _rb.velocity = Vector3.zero;
             _navMeshAgent.Warp(_startPos);
-            _navMeshAgent.isStopped = false;
             //_navMeshAgent.SetDestination(_destination);
+
             _counter = 0;
             _navMeshAgent.SetDestination(_path[_counter]);
+            _counter++;
 
             _canMove = true;
         }
