@@ -51,8 +51,8 @@ public class GameManager : Singleton<GameManager> {
     #region State Functions
 
     private void Init() {
-        throw new NotImplementedException();
-        //ChangeState(GameState.Running);
+
+        ChangeState(GameState.Running);
     }
 
     private void Painting() {
@@ -60,7 +60,7 @@ public class GameManager : Singleton<GameManager> {
     }
 
     private void Running() {
-        throw new NotImplementedException();
+        Debug.Log("this thing is broken");
     }
 
     private void Restart() {

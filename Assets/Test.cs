@@ -47,7 +47,7 @@ public class Test : MonoBehaviour {
 
             transform.forward = dir.normalized;
 
-            if (dir.magnitude < 0.5f) {
+            if (dir.magnitude < 0.6f) {
                 dir = dir.normalized;
                 dir *= 0.3f;
             } else {
