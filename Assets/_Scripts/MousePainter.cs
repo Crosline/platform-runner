@@ -1,3 +1,4 @@
+using FreeDraw;
 using UnityEngine;
 
 public class MousePainter : MonoBehaviour{
@@ -24,10 +25,6 @@ public class MousePainter : MonoBehaviour{
             if (Physics.Raycast(ray, out hit, 100.0f)){
                 Debug.DrawRay(ray.origin, hit.point - ray.origin, Color.red);
                 transform.position = hit.point;
-                Paintable p = hit.collider.GetComponent<Paintable>();
-                if(p != null){
-                    PaintManager.Instance.paint(p, hit.point, radius, hardness, strength, paintColor);
-                }
             }
         }
 

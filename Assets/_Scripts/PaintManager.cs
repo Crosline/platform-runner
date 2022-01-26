@@ -22,19 +22,22 @@ public class PaintManager : Singleton<PaintManager>{
 
     CommandBuffer command;
 
-    private void Start() {
+
+    public void initTextures(Paintable paintable) {
+
         paintMaterial = new Material(texturePaint);
         extendMaterial = new Material(extendIslands);
         command = new CommandBuffer();
         command.name = "CommmandBuffer - " + gameObject.name;
-    }
 
-    public void initTextures(Paintable paintable){
+
         RenderTexture mask = paintable.getMask();
         RenderTexture uvIslands = paintable.getUVIslands();
         RenderTexture extend = paintable.getExtend();
         RenderTexture support = paintable.getSupport();
         Renderer rend = paintable.getRenderer();
+
+
 
         command.SetRenderTarget(mask);
         command.SetRenderTarget(extend);
