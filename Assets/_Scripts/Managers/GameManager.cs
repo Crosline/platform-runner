@@ -10,14 +10,15 @@ public class GameManager : Singleton<GameManager> {
 
     public GameState State { get; private set; }
 
-    /*[SerializeField]
-    private InputHandler _inputHandler;*/
+    [SerializeField]
+    private InputHandler _inputHandler;
 
     // Start is called before the first frame update
     void Start() {
-        /*if (_inputHandler == null) {
+        if (_inputHandler == null) {
             _inputHandler = FindObjectOfType<InputHandler>();
-        }*/
+            _inputHandler.SetIsActive(false);
+        }
 
         ChangeState(GameState.Starting);
     }
@@ -43,6 +44,7 @@ public class GameManager : Singleton<GameManager> {
                 throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
+
         OnAfterStateChanged?.Invoke(newState);
 
         Debug.Log($"New State: {newState}");
@@ -55,13 +57,16 @@ public class GameManager : Singleton<GameManager> {
         ChangeState(GameState.Running);
     }
 
-    private void Painting() {
-        throw new NotImplementedException();
+    private void Running() {
+
+        EnemyManager.Instance.Init();
+        _inputHandler.SetIsActive(true);
     }
 
-    private void Running() {
-        Debug.Log("this thing is broken");
+    private void Painting() {
+        _inputHandler.SetIsActive(false);
     }
+
 
     private void Restart() {
 

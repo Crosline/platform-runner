@@ -1,28 +1,46 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 
-public class Character : MonoBehaviour, ICharacter
-{
-    private Vector3 _startPos;
+public class Character : MonoBehaviour, ICharacter {
+    internal Vector3 _startPos;
 
-    private Rigidbody _rb;
+    [SerializeField]
+    internal Rigidbody _rb;
+
+    [SerializeField]
+    internal float _speed;
+
+    [SerializeField]
+    internal Animator _animator;
+
+    internal bool _canMove = true;
+
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if (_rb == null)
             _rb = GetComponent<Rigidbody>();
+
+        if (_animator == null)
+            _animator = transform.GetChild(0).GetComponent<Animator>();
+
         _startPos = transform.position;
     }
 
-    public void Die() {
-        StopAllCoroutines();
-        StartCoroutine(RestartCheckpoint());
-    }
     public void Move() {
         throw new System.NotImplementedException();
+    }
+
+    public void PushBack(Vector3 hitPoint, float force) {
+
+        Vector3 dir = (transform.position - hitPoint).normalized;
+
+        _rb.velocity = (dir * force);
+    }
+
+    public void Die() {
+        StartCoroutine(RestartCheckpoint());
     }
 
     IEnumerator RestartCheckpoint() {
@@ -31,6 +49,7 @@ public class Character : MonoBehaviour, ICharacter
         _rb.velocity = Vector3.zero;
         transform.position = _startPos;
 
+        StopAllCoroutines();
     }
 
 }

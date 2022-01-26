@@ -1,37 +1,34 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Obstacle : MonoBehaviour
-{
+public class Obstacle : MonoBehaviour {
     [SerializeField]
     private bool isHarmful;
 
     [SerializeField]
     private float force;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
 
     private void OnCollisionEnter(Collision collision) {
         if (collision.collider.CompareTag("Player") || collision.collider.CompareTag("Enemy")) {
 
+            var character = collision.collider.GetComponent<Character>();
 
-            Vector3 dir = (transform.position - collision.GetContact(0).point).normalized;
 
-            Rigidbody r = collision.collider.GetComponent<Rigidbody>();
+            if (collision.collider.CompareTag("Enemy")) {
+                ((Enemy)character).PushBack(collision.contacts[0].point, force);
 
-            r.AddForce(collision.contacts[0].normal * force);
+                if (isHarmful) {
+                    ((Enemy)character).Die();
+                }
+            } else {
+                character.PushBack(collision.contacts[0].point, force);
+
+                if (isHarmful) {
+                    ((Player)character).Die();
+                }
+            }
+
+
         }
     }
 }

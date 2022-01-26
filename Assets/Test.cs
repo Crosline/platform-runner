@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Test : MonoBehaviour {
     public float speed;
@@ -7,8 +8,6 @@ public class Test : MonoBehaviour {
     public Animator animator;
 
     public LayerMask groundMask;
-
-    public FloatingJoystick joystick;
 
     private Rigidbody rb;
 
@@ -24,43 +23,4 @@ public class Test : MonoBehaviour {
 
     }
 
-    private void Update() {
-        
-        if (Input.GetButtonDown("Jump")) {
-
-            if (IsGrounded) {
-
-                animator.SetTrigger("Jump");
-
-                rb.AddForce(transform.up * jumpForce);
-            }
-
-        }
-    }
-
-    void FixedUpdate() {
-
-        Vector3 dir = Vector3.forward * joystick.Vertical + Vector3.right * joystick.Horizontal;
-
-        animator.SetFloat("Speed", dir.magnitude);
-        if (dir.magnitude > 0.1f) {
-
-            transform.forward = dir.normalized;
-
-            if (dir.magnitude < 0.6f) {
-                dir = dir.normalized;
-                dir *= 0.3f;
-            } else {
-                dir = dir.normalized;
-            }
-        }
-
-
-
-
-        float _velSpeed = speed * Time.fixedDeltaTime;
-
-        rb.velocity = new Vector3(dir.x * _velSpeed, rb.velocity.y, dir.z * _velSpeed);
-
-    }
 }

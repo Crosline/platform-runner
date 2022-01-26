@@ -18,18 +18,11 @@ public class FollowTarget : MonoBehaviour {
     private bool _canMove = false;
 
     void OnEnable() {
-        Debug.Log("Subscribed");
         GameManager.OnAfterStateChanged += StartMove;
-        Player.OnRestartTriggered += RestartCam;
     }
 
     void OnDisable() {
         GameManager.OnAfterStateChanged -= StartMove;
-        Player.OnRestartTriggered -= RestartCam;
-    }
-
-    private void RestartCam() {
-        throw new NotImplementedException();
     }
 
     // Start is called before the first frame update
@@ -46,13 +39,11 @@ public class FollowTarget : MonoBehaviour {
     }
 
     private void StartMove(GameManager.GameState gameState) {
-        Debug.Log("STATE CHANGED");
+
         if (gameState == GameManager.GameState.Running) {
             _canMove = true;
         } else if (gameState == GameManager.GameState.Painting) {
             SetTarget(_target, new Vector3(0, 5, 1), Quaternion.identity);
-        } else {
-            _canMove = false;
         }
     }
 
